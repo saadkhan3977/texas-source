@@ -25,6 +25,7 @@ Route::post('password/code/check', [\App\Http\Controllers\Api\CodeCheckControlle
 
 
 Route::get('products/{vendorID}', [\App\Http\Controllers\Api\RegisterController::class, 'products']);
+Route::get('vendor/list', [\App\Http\Controllers\Api\OrderController::class, 'vendor_list']);
 
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -32,7 +33,6 @@ Route::group(['middleware' => ['api','auth:sanctum'], 'prefix' => 'auth'], funct
 
     Route::get('wallet', [\App\Http\Controllers\Api\OrderController::class, 'wallet']);
     Route::get('vendor/order/list', [\App\Http\Controllers\Api\OrderController::class, 'vendor_order']);
-    Route::get('vendor/list', [\App\Http\Controllers\Api\OrderController::class, 'vendor_list']);
     Route::get('order/list', [\App\Http\Controllers\Api\OrderController::class, 'user_order']);
     Route::post('/checkout', [App\Http\Controllers\Api\OrderController::class, 'store']);
 
