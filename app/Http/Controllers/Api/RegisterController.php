@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Mail;
 use App\Models\User;
 use App\Models\Product;
+use App\Models\Wallet;
 use Illuminate\Support\Facades\Auth;
 use App\Mail\SendVerifyCode;
 
@@ -45,6 +46,13 @@ class RegisterController extends BaseController
 		//$input['email_verified_at'] = Carbon::now();
 		$input['email_code'] = mt_rand(9000, 9999);
         $user = User::create($input);
+
+        if($request->role == 'vendor')
+        {
+            Wallet::create([
+                'user_id' => $user->id
+            ]);
+        }
         
         Mail::to($user->email)->send(new SendVerifyCode($input['email_code']));
         $token =  $user->createToken('token')->plainTextToken;

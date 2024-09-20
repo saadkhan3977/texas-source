@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Models\Order;
 use App\Models\User;
+use App\Models\Wallet;
 use App\Models\OrderDetail;
 use Auth;
 use Stripe;
@@ -53,8 +54,8 @@ class OrderController extends BaseController
                 OrderDetail::create([
                     'order_id' => $order->id,
                     'product_id' => $id,
-                    'color' => $request->color[$key],
-                    'size' => $request->size[$key],
+                    // 'color' => $request->color[$key],
+                    // 'size' => $request->size[$key],
                     'qty' => $request->product_quantity[$key],
                 ]);
             }
@@ -65,6 +66,20 @@ class OrderController extends BaseController
         {
             return $this->sendError($e->getMessage());
         }
+    }
+
+    public function wallet()
+    {
+        try
+        {
+            $order = Wallet::where('user_id',Auth::user()->id)->first();
+            $order['earning_history'] = Order::with('orderdetail','orderdetail.product','orderdetail.product.product_image')->where('vendor_id',Auth::user()->id)->get();
+            return response()->json(['success'=>true,'msg'=>'My Wallet','wallet_info' => $order]);
+        }
+        catch(\Eception $e)
+        {
+            return $this->sendError($e->getMessage());
+        }    
     }
 
     public function user_order()
