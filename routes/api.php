@@ -24,7 +24,7 @@ Route::any('password/reset', [\App\Http\Controllers\Api\CodeCheckController::cla
 Route::post('password/code/check', [\App\Http\Controllers\Api\CodeCheckController::class,'code_verify']);
 
 
-Route::get('products', [\App\Http\Controllers\Api\RegisterController::class, 'products']);
+Route::get('products/{vendorID}', [\App\Http\Controllers\Api\RegisterController::class, 'products']);
 
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

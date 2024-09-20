@@ -101,9 +101,9 @@ class RegisterController extends BaseController
         }
     }
 
-    public function products(Request $request)
+    public function products(Request $request,$id)
     {
-        $success['products'] = Product::with('product_image')->get();
+        $success['products'] = Product::with('product_image')->where('user_id',$id)->get();
         return $this->sendResponse($success, 'Products Lists');
     }
 

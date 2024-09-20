@@ -9,13 +9,29 @@ use App\Models\Order;
 use App\Models\User;
 use App\Models\OrderDetail;
 use Auth;
+use Stripe;
 
 class OrderController extends BaseController
 {
+    public function __construct()
+    {
+        $stripe = \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+    }
+
     public function store(Request $request) 
     {
         try
         {
+            if($request->payment_method != 'cod')
+            {
+                $token = $request->input('stripeToken');
+                Stripe\Charge::create ([
+                    "amount" => $request->total_amount * 100,
+                    "currency" => "usd",
+                    "source" => $request->stripeToken,
+                    "description" => "This is a Texas Source Checkout transaction" 
+                ]);
+            }
             $order = Order::create([
                 'orderId' => 'ORD-'.strtoupper(Str::random(10)),
                 'user_id' => Auth::user()->id,
@@ -29,6 +45,7 @@ class OrderController extends BaseController
                 'country' => $request->country,
                 'address' => $request->address,
                 'post_code' => $request->post_code,
+                'payment_method' => $request->payment_method,
             ]);
 
             foreach($request->product_id as $key => $id)

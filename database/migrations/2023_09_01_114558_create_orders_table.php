@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('country')->nullable();
             $table->text('address')->nullable();
             $table->string('post_code')->nullable();
+            $table->string('payment_method')->nullable();
             $table->string('quantity');
             $table->timestamps();
         });
