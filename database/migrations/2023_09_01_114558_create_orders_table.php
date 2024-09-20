@@ -16,6 +16,14 @@ return new class extends Migration
             $table->integer('user_id');
             $table->string('orderId');
             $table->string('total');
+            $table->string('total')->nullable();
+            $table->string('first_name')->nullable();
+            $table->string('last_name')->nullable();
+            $table->string('email')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('country')->nullable();
+            $table->text('address')->nullable();
+            $table->string('post_code')->nullable();
             $table->string('quantity');
             $table->timestamps();
         });

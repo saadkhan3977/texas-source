@@ -21,7 +21,14 @@ class OrderController extends BaseController
                 'user_id' => Auth::user()->id,
                 'vendor_id' => $request->vendor_id,
                 'quantity' => $request->item_quantity,
-                'total' => $request->total
+                'total' => $request->total,
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'country' => $request->country,
+                'address' => $request->address,
+                'post_code' => $request->post_code,
             ]);
 
             foreach($request->product_id as $key => $id)
