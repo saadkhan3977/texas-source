@@ -80,6 +80,12 @@ class RegisterController extends BaseController
             if(Auth::attempt(['email' => $request->email, 'password' => $request->password,'status'=>'active']))
             { 
                 $users = Auth::user(); 
+                if(Auth::user()->role  == 'vendor')
+                {
+                    $user['total_earning'] = $user->getTotalEarnings();
+                    $user['selling_product'] = $user->selling_product()->count();
+                    // $user['total_earning'] = Order::where('');
+                }
                 $token =  $users->createToken('token')->plainTextToken; 
                 return response()->json(['success'=>true,'message'=>'Logged In successfully' ,'token'=>$token,'user_info'=>$user]);
             } 

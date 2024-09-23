@@ -12,6 +12,16 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+
+    public function selling_product()
+    {
+        return $this->hasMany(\App\Models\Order::class,'vendor_id','id')->where('status','delivered');
+    }
+
+    public function getTotalEarnings()
+    {
+        return $this->selling_product()->sum('total');
+    }
     /**
      * The attributes that are mass assignable.
      *

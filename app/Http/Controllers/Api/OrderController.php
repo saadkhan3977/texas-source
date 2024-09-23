@@ -19,6 +19,20 @@ class OrderController extends BaseController
         $stripe = \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
     }
 
+    public function index(Request $request) 
+    {
+        $data = Order::where('vendor_id',Auth::user()->id)->get();
+        return response()->json(['success'=>true,'msg'=>'Order List', 'order_list' => $data]);
+    }
+    
+    public function order_status(Request $request,$id) 
+    {
+        $data = Order::find($id);
+        $data->status = $request->status;
+        $data->save();
+        return response()->json(['success'=>true,'msg'=>'Order Status Update']);
+    }
+
     public function store(Request $request) 
     {
         try
@@ -113,7 +127,7 @@ class OrderController extends BaseController
     {
         try
         {
-            $order = OrderDetail::with('order','order.product_image','order.user')->where('vendor_id',Auth::user()->id)->get();
+            $order = Order::with('orderdetail','orderdetail.product','orderdetail.product.product_image')->where('vendor_id',Auth::user()->id)->get();
             return response()->json(['success'=>true,'msg'=>'Order List','orders' => $order]);
         }
         catch(\Eception $e)

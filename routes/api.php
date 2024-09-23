@@ -33,6 +33,7 @@ Route::group(['middleware' => ['api','auth:sanctum'], 'prefix' => 'auth'], funct
 
     Route::get('wallet', [\App\Http\Controllers\Api\OrderController::class, 'wallet']);
     Route::get('vendor/order/list', [\App\Http\Controllers\Api\OrderController::class, 'vendor_order']);
+    Route::post('vendor/oderr_status/{orderId}', [App\Http\Controllers\Api\OrderController::class, 'order_status']);
     Route::get('order/list', [\App\Http\Controllers\Api\OrderController::class, 'user_order']);
     Route::post('/checkout', [App\Http\Controllers\Api\OrderController::class, 'store']);
 

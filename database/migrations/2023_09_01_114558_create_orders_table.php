@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('post_code')->nullable();
             $table->string('payment_method')->nullable();
             $table->string('quantity');
+            $table->enum('status',['new','process','delivered','cancel'])->default('new');
             $table->timestamps();
         });
     }
