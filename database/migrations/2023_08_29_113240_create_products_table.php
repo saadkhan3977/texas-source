@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('user_id')->nullable();
             $table->string('title')->nullable();
             $table->string('category')->nullable();
-            $table->string('quantity')->nullable();
+            $table->integer('quantity')->default(1);
+            $table->integer('stock')->nullable();
             $table->string('price')->nullable();
             $table->string('size')->nullable();
             $table->string('color')->nullable();
