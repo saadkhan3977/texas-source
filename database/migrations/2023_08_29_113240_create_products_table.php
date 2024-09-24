@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('size')->nullable();
             $table->string('color')->nullable();
             $table->text('photo')->nullable();
+            $table->text('description')->nullable();
             $table->enum('status',['active','inactive'])->default('active');
             $table->timestamps();
         });
