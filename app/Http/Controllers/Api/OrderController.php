@@ -63,14 +63,14 @@ class OrderController extends BaseController
                 'payment_method' => $request->payment_method,
             ]);
 
-            foreach($request->product_id as $key => $id)
+            foreach($request->products as $product)
             {
                 OrderDetail::create([
                     'order_id' => $order->id,
-                    'product_id' => $id,
-                    // 'color' => $request->color[$key],
-                    // 'size' => $request->size[$key],
-                    'qty' => $request->product_quantity[$key],
+                    'product_id' => $product->id,
+                    'color' => $product->color,
+                    'size' => $product->size,
+                    'qty' => $request->product_quantity,
                 ]);
             }
 

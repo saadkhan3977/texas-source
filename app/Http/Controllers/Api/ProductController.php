@@ -54,8 +54,8 @@ class ProductController extends BaseController
                 'category' =>$request->category,
                 'quantity' =>$request->quantity,
                 'price' =>$request->price,
-                'size' =>$request->size,
-                'color' =>$request->color,
+                'size' => json_encode($request->size),
+                'color' =>json_encode($request->color),
                 'status' => 'Active'
             ]);
 
