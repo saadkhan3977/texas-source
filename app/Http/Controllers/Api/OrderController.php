@@ -139,7 +139,14 @@ class OrderController extends BaseController
             // return Auth::user()
             if($request->status)
             {
-                $order = Order::with('orderdetail','orderdetail.product','orderdetail.product.product_image')->where('status',$request->status)->where('vendor_id',Auth::user()->id)->get();
+                if($request->status == 'all')
+                {
+                    $order = Order::with('orderdetail','orderdetail.product','orderdetail.product.product_image')->where('vendor_id',Auth::user()->id)->get();
+                }
+                else
+                {
+                    $order = Order::with('orderdetail','orderdetail.product','orderdetail.product.product_image')->where('status',$request->status)->where('vendor_id',Auth::user()->id)->get();
+                }
             }
             else
             {
