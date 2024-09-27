@@ -132,11 +132,19 @@ class OrderController extends BaseController
         }    
     }
 
-    public function vendor_order()
+    public function vendor_order(Request $request)
     {
         try
         {
-            $order = Order::with('orderdetail','orderdetail.product','orderdetail.product.product_image')->where('vendor_id',Auth::user()->id)->get();
+            // return Auth::user()
+            if($request->status)
+            {
+                $order = Order::with('orderdetail','orderdetail.product','orderdetail.product.product_image')->where('status',$request->status)->where('vendor_id',Auth::user()->id)->get();
+            }
+            else
+            {
+                $order = Order::with('orderdetail','orderdetail.product','orderdetail.product.product_image')->where('status','pending')->where('vendor_id',Auth::user()->id)->get();
+            }
             return response()->json(['success'=>true,'msg'=>'Order List','orders' => $order]);
         }
         catch(\Eception $e)
