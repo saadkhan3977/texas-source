@@ -52,8 +52,9 @@ class ProductController extends BaseController
                 'user_id' => Auth::user()->id,
                 'title' =>$request->title,
                 'category' =>$request->category,
-                'quantity' =>$request->quantity,
+                'stock' =>$request->quantity,
                 'price' =>$request->price,
+                'description' =>$request->description,
                 'size' => json_encode($request->size),
                 'color' =>json_encode($request->color),
                 'status' => 'Active'

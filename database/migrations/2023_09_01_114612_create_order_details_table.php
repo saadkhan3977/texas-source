@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('qty');
             $table->string('color')->nullable();
             $table->string('size')->nullable();
+            $table->string('category')->nullable();
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('SET NULL');
             $table->timestamps();
         });

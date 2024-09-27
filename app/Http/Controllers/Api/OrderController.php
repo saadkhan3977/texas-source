@@ -67,10 +67,11 @@ class OrderController extends BaseController
             {
                 OrderDetail::create([
                     'order_id' => $order->id,
-                    'product_id' => $product->id,
-                    'color' => $product->color,
-                    'size' => $product->size,
-                    'qty' => $request->product_quantity,
+                    'product_id' => $product['id'],
+					'category' => $product['category'],
+                    'color' => $product['color'],
+                    'size' => $product['sizes'],
+                    'qty' => $product['quantity'],
                 ]);
             }
 
@@ -96,11 +97,19 @@ class OrderController extends BaseController
         }    
     }
 
-    public function user_order()
+    public function user_order(Request $request)
     {
         try
         {
-            $order = Order::with('orderdetail','orderdetail.product','orderdetail.product.product_image')->where('user_id',Auth::user()->id)->get();
+            if($request->status !=  'all')
+            {
+                $order = Order::with('orderdetail','orderdetail.product','orderdetail.product.product_image')->where('user_id',Auth::user()->id)->where('stats',$request->status)->get();
+            }
+            else
+            {
+                $order = Order::with('orderdetail','orderdetail.product','orderdetail.product.product_image')->where('user_id',Auth::user()->id)->get();
+            }
+
             return response()->json(['success'=>true,'msg'=>'Order List','orders' => $order]);
         }
         catch(\Eception $e)
