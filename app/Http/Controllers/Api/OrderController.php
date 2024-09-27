@@ -101,9 +101,9 @@ class OrderController extends BaseController
     {
         try
         {
-            if($request->status !=  'all')
+            if($request->status !== 'all')
             {
-                $order = Order::with('orderdetail','orderdetail.product','orderdetail.product.product_image')->where('user_id',Auth::user()->id)->where('stats',$request->status)->get();
+                $order = Order::with('orderdetail','orderdetail.product','orderdetail.product.product_image')->where('user_id',Auth::user()->id)->where('status',$request->status)->get();
             }
             else
             {
